@@ -23,7 +23,8 @@ app.use("/api", routes);
 app.get("/", async (req, res) => {
     
     res.send("Your app is running perfectly...");
-})
+});
+
 
 app.listen(port, ()=>{
     console.log(`Your app listening at port ${port}`);
