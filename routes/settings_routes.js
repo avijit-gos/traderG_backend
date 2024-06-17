@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const Settings = require("../models/settings");
 const SettingsRoute = express.Router();
+const ConsultingFees = require("../models/consultingFees")
 
 
 /**
@@ -33,7 +34,6 @@ const SettingsRoute = express.Router();
  SettingsRoute.get("/list", async (req, res) => {
     try {
         let SettingsData = await Settings.find({}).sort({_id:-1});
-
         message = {
             error: false,
             message: "All Settings result list",
@@ -139,6 +139,16 @@ const SettingsRoute = express.Router();
         res.status(200).send(message);
     }
 });
+
+SettingsRoute.get("/cousulting-fees", async(req, res) => {
+    try {
+        const sorttype = req.query.sortType || "90 days"
+       const data = await  ConsultingFees.findOne({duration: sorttype});
+       return res.status(200).json({status: 200, data})
+    } catch (error) {
+        return res.status(400).json({messag: error})
+    }
+})
 
 
 
